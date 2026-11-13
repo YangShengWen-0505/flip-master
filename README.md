@@ -10,8 +10,10 @@
 - 離線資料只在同一瀏覽器，護照是篩選條件而非安全登入；共用裝置請使用不同瀏覽器使用者。
 
 ## 課堂自動收集
-改用 Google Apps Script + 私人 Google 試算表。學生開啟課堂連結即可玩，不需要註冊或登入。每 3 秒送出最新紀錄，老師每 10 秒更新。斷線保留佇列，重新上網補傳；需保持網頁開啟。
-一次性設定見 [GOOGLE_SETUP.md](GOOGLE_SETUP.md)。舊 supabase.sql 僅保留為先前版本參考，前端已不使用。
+改用 Google Apps Script + 私人 Google 試算表。學生直接開 GitHub Pages 根網址即可玩，不需要註冊或登入。每 3 秒送出最新紀錄，老師每 10 秒更新。斷線保留佇列，重新上網補傳；需保持網頁開啟。
+老師只輸入管理密碼即可登入；密碼不包含在網站原始碼。主選單與遊戲採用《時光代理人》三位角色的 AI 生成插畫與照相館配色。
+
+後端一次性設定見 [GOOGLE_SETUP.md](GOOGLE_SETUP.md)。舊 supabase.sql 僅保留為先前版本參考，前端已不使用。
 
 ## GitHub Pages
 Repository Settings → Pages → Source 選 GitHub Actions。推送 main 觸發部署。預期網址 https://YangShengWen-0505.github.io/flip-master/ 。未成功部署前不得視為已上線。

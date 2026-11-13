@@ -4,7 +4,7 @@ Flip Master，原生網頁；2026-11-13 建立。GitHub Pages 既有版本已上
 ## 服務與平台
 GitHub: YangShengWen-0505/flip-master；Pages 靜態部署。改用 Google Apps Script 與私人試算表。
 ## 帳號與憑證參照
-Git credential 可推送；Google 初始化已完成授權。學生課堂碼與老師管理密碼由 setup 產生，僅存在私人試算表及 Script Properties。
+Git credential 可推送；Google 初始化已完成授權。學生寫入碼與接收網址已內建 sync.js，供公開網站自動傳送；老師管理密碼僅在私人試算表與 Script Properties，前端登入期間只保存在記憶體。
 ## 設定、建置與發行
 無建置依賴。python -m http.server 8080。main 推送由 .github/workflows/pages.yml 部署，先設定 Pages Source 為 GitHub Actions。
 ## 資料、備份與復原
@@ -17,3 +17,5 @@ Git credential 可推送；Google 初始化已完成授權。學生課堂碼與�
 README.md、GOOGLE_SETUP.md、google-apps-script/Code.gs。2026-11-13 完成 Apps Script v1 部署及線上收件實測。測試班紀錄保留以供檢查。
 
 接收端：https://script.google.com/macros/s/AKfycbyhoRjHHdJc340fTca57a_uZfygt4x_OXRV4GFQ5LDY-ENfshdnDbLKVhXBzkNtQLUX/exec
+
+2026-11-13 更新：主選單與全遊戲角色主題、免設定學生直連、老師單一密碼登入。assets/time-studio.png 隨 GitHub Pages workflow 部署。
