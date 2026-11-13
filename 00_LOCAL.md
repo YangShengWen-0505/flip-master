@@ -24,4 +24,5 @@ README.md、GOOGLE_SETUP.md、google-apps-script/Code.gs。2026-11-13 完成 App
 
 新增 effects.js：Web Audio 音效與動畫，無外部音訊服務／費用；隨 Pages 部署。fm-sound 儲存本機開關；音訊不會上傳。資源版本 20261113-motion，主選單使用明確圖片元素。
 
-新增 voice.js：裝置合成語音，無新增 API 帳號；fm-voice 獨立於 fm-sound。主選單直接填座號、姓名；新紀錄 className 固定「翻棋教室」，保留後端欄位相容性。資源版本 20261113-voice。
+
+目前版本：角色語音已移除，voice.js 不再部署。保留 effects.js 遊戲音效。主選單全幅圖片，遊戲場景使用 assets/game-studio.png，隨 Pages 部署。主頁僅座號姓名；新紀錄 className 固定「翻棋教室」。資源版本 20261113-scene。
