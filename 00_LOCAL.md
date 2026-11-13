@@ -19,3 +19,5 @@ README.md、GOOGLE_SETUP.md、google-apps-script/Code.gs。2026-11-13 完成 App
 接收端：https://script.google.com/macros/s/AKfycbyhoRjHHdJc340fTca57a_uZfygt4x_OXRV4GFQ5LDY-ENfshdnDbLKVhXBzkNtQLUX/exec
 
 2026-11-13 更新：主選單與全遊戲角色主題、免設定學生直連、老師單一密碼登入。assets/time-studio.png 隨 GitHub Pages workflow 部署。
+
+新增 dialogue.js 角色對話（隨 Pages 工作流程部署）。老師入口改為開始遊戲後填座號 00 或 -1，再輸入管理密碼；此座號僅路由，不授予讀取權限。學生記錄名稱包含座號與姓名，舊紀錄仍保留原格式。

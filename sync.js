@@ -35,7 +35,8 @@
  }
  const handle=fn=>async()=>{try{await fn()}catch(e){notify(e.message)}};
  $('teacherForm').onsubmit=async e=>{e.preventDefault();if(reading)return;const secret=$('teacherKey').value.trim();if(!secret)return;$('teacherConnect').disabled=true;$('teacherStatus').textContent='正在驗證管理密碼…';teacherSecret=secret;generation++;collected=[];teacher();await poll();$('teacherConnect').disabled=false;if(teacherSecret)$('teacherKey').value=''};
- $('teacherLogout').onclick=()=>{teacherSecret='';generation++;collected=[];teacher();$('teacherDashboard').hidden=true;$('teacherLogin').hidden=false;$('teacherKey').value='';$('teacherStatus').textContent='已登出老師觀察室';};
+ window.lockTeacher=()=>{teacherSecret='';generation++;collected=[];teacher();$('teacherDashboard').hidden=true;$('teacherLogin').hidden=false;$('teacherKey').value='';$('teacherStatus').textContent='已登出老師觀察室';};
+ $('teacherLogout').onclick=()=>{window.lockTeacher();identityReady=false;showView('home')};
  $('cloudFetch').onclick=handle(async()=>{if(!teacherSecret)throw Error('請先輸入管理密碼登入');await poll()});
  window.addEventListener('online',flush);document.addEventListener('visibilitychange',()=>{if(!document.hidden){flush();poll()}});
  window.addEventListener('beforeunload',e=>{if(Object.keys(outbox).length){e.preventDefault();e.returnValue=''}});
