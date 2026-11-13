@@ -28,3 +28,5 @@ README.md、GOOGLE_SETUP.md、google-apps-script/Code.gs。2026-11-13 完成 App
 目前版本：角色語音已移除，voice.js 不再部署。保留 effects.js 遊戲音效。主選單全幅圖片，遊戲場景使用 assets/game-studio.png，隨 Pages 部署。主頁僅座號姓名；新紀錄 className 固定「翻棋教室」。資源版本 20261113-scene。
 
 更新：準備／遊玩兩階段介面；返回確認保存當局。同步僅在背景執行，不顯示狀態。靜態資源版本 20261113-fullscreen。
+
+新增 music.js 原創 Web Audio 背景音樂，fm-music 獨立記住開關，首次點擊或鍵盤操作後播放；分頁隱藏即暫停，無外部音訊服務。開始挑戰後以返回設定取代開始按鈕，確認離開會保存紀錄。我的紀錄使用照相館背景。資源版本 20261113-music。

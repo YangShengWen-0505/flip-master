@@ -33,7 +33,9 @@ function openReplay(g){replaying=g;$('replayTitle').textContent=`${g.student} �
 function replay(){const n=+$('step').value,g=replaying,b=n?g.moves[n-1].after:g.initial;grid($('replayBoard'),b,g.rows,g.cols);$('stepInfo').textContent=n?`第 ${n} 步：${g.moves[n-1].row} 行 ${g.moves[n-1].col} 列 · ${fmt(g.moves[n-1].elapsed)}`:'第 0 步：初始棋盤'}$('step').oninput=replay;$('closeReplay').onclick=()=>$('replay').close();
 draw();teacher();Companion.restore(game);
 
-function requestReturn(){$('returnDescription').textContent=game&&!game.ended?'本次挑戰會保存下來，之後可以在「我的紀錄」回顧。':'返回後可以重新填寫座號與姓名。';if(!$('returnDialog').open)$('returnDialog').showModal()}
-$('backHome').onclick=requestReturn;
+let returnTarget='home';
+function requestReturn(target='home'){returnTarget=target;$('returnTitle').textContent=target==='setup'?'確定離開這次挑戰嗎？':'確定返回主選單嗎？';$('returnDescription').textContent=game&&!game.ended?'本次挑戰會保存下來，之後可以在「我的紀錄」回顧。':(target==='setup'?'返回後可以重新選擇棋盤與挑戰方式。':'返回後可以重新填寫座號與姓名。');if(!$('returnDialog').open)$('returnDialog').showModal()}
+$('backHome').onclick=()=>requestReturn('home');
+$('backSetup').onclick=()=>requestReturn('setup');
 $('cancelReturn').onclick=()=>$('returnDialog').close();
-$('confirmReturn').onclick=()=>{finish();Effects.clear();window.lockTeacher?.();identityReady=false;$('play').dataset.phase='setup';$('returnDialog').close();showView('home')};
+$('confirmReturn').onclick=()=>{finish();Effects.clear();if(returnTarget==='setup'){$('play').dataset.phase='setup';$('returnDialog').close();showView('play');return}window.lockTeacher?.();identityReady=false;$('play').dataset.phase='setup';$('returnDialog').close();showView('home')};
