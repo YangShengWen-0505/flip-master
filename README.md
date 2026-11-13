@@ -9,13 +9,9 @@
 - 學生個人回顧；老師匯入多份 JSON、搜尋、統計、逐步重播、JSON 與 CSV 匯出。
 - 離線資料只在同一瀏覽器，護照是篩選條件而非安全登入；共用裝置請使用不同瀏覽器使用者。
 
-## 雲端設定
-GitHub Pages 僅提供靜態網站，不會自動集中學生紀錄。
-1. 建立 Supabase 專案，在 SQL editor 執行 supabase.sql。
-2. 在 Authentication 建立師生帳號；管理者用 SQL 將老師 UUID 加入 teachers。
-3. 在頁面雲端設定填 URL、公開 anon key；不得使用 service_role。
-4. 學生登入，填老師 UUID，按上傳我的紀錄；老師登入後按更新雲端資料。
-5. 登入 token 僅存在記憶體，重整後需重登；紀錄需手動上傳。雲端政策限制學生只讀寫自己的資料、老師只讀分配給自己的資料。
+## 課堂自動收集
+改用 Google Apps Script + 私人 Google 試算表。學生開啟課堂連結即可玩，不需要註冊或登入。每 3 秒送出最新紀錄，老師每 10 秒更新。斷線保留佇列，重新上網補傳；需保持網頁開啟。
+一次性設定見 [GOOGLE_SETUP.md](GOOGLE_SETUP.md)。舊 supabase.sql 僅保留為先前版本參考，前端已不使用。
 
 ## GitHub Pages
 Repository Settings → Pages → Source 選 GitHub Actions。推送 main 觸發部署。預期網址 https://YangShengWen-0505.github.io/flip-master/ 。未成功部署前不得視為已上線。
