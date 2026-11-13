@@ -21,3 +21,5 @@ README.md、GOOGLE_SETUP.md、google-apps-script/Code.gs。2026-11-13 完成 App
 2026-11-13 更新：主選單與全遊戲角色主題、免設定學生直連、老師單一密碼登入。assets/time-studio.png 隨 GitHub Pages workflow 部署。
 
 新增 dialogue.js 角色對話（隨 Pages 工作流程部署）。老師入口改為開始遊戲後填座號 00 或 -1，再輸入管理密碼；此座號僅路由，不授予讀取權限。學生記錄名稱包含座號與姓名，舊紀錄仍保留原格式。
+
+新增 effects.js：Web Audio 音效與動畫，無外部音訊服務／費用；隨 Pages 部署。fm-sound 儲存本機開關；音訊不會上傳。資源版本 20261113-motion，主選單使用明確圖片元素。
