@@ -16,3 +16,12 @@
 /* Keep the teacher heading clear of the fixed scene navigation on phones */
 body[data-screen=teacher] main{padding-top:120px}
 @media(max-width:700px){body[data-screen=teacher] main{padding-top:150px}}
+
+/* Teacher screens hide the student navigation (翻棋挑戰 / 我的紀錄) */
+body[data-screen=teacher] nav [data-view=play],body[data-screen=teacher] nav [data-view=history]{display:none}
+/* Header actions on the dashboard, top right */
+.head-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:flex-start}
+/* Password change dialog */
+.key-dialog{width:min(92vw,440px);border:1px solid #7eaaa857;border-radius:14px;padding:22px}
+.key-dialog h2{margin:0 0 14px;font-size:20px}
+.key-dialog .key-form{max-width:none}

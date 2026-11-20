@@ -20,8 +20,7 @@ function handle_(req){
  if(req.action==='changeTeacherKey'){
   if(!req.key||req.key!==p.getProperty('TEACHER_KEY'))throw Error('老師管理密碼不正確');
   const next=typeof req.newKey==='string'?req.newKey.trim():'';
-  if(next.length<8||next.length>100)throw Error('新密碼需為 8 至 100 個字元');
-  if(next===p.getProperty('STUDENT_KEY'))throw Error('新密碼不可與學生課堂碼相同');
+  if(!next)throw Error('新密碼不可空白');
   const lock=LockService.getScriptLock();lock.waitLock(20000);
   try {
    p.setProperty('TEACHER_KEY',next);
