@@ -17,6 +17,20 @@ function handle_(req){
  const p=PropertiesService.getScriptProperties();
  if(!p.getProperty('SHEET_ID'))throw Error('老師尚未完成設定');
  const ss=SpreadsheetApp.openById(p.getProperty('SHEET_ID')),sheet=ss.getSheetByName('紀錄');
+ if(req.action==='changeTeacherKey'){
+  if(!req.key||req.key!==p.getProperty('TEACHER_KEY'))throw Error('老師管理密碼不正確');
+  const next=typeof req.newKey==='string'?req.newKey.trim():'';
+  if(next.length<8||next.length>100)throw Error('新密碼需為 8 至 100 個字元');
+  if(next===p.getProperty('STUDENT_KEY'))throw Error('新密碼不可與學生課堂碼相同');
+  const lock=LockService.getScriptLock();lock.waitLock(20000);
+  try {
+   p.setProperty('TEACHER_KEY',next);
+   const settings=ss.getSheetByName('教室設定');
+   if(settings)settings.getRange(3,2).setValue(next);
+   SpreadsheetApp.flush();
+  } finally{lock.releaseLock()}
+  return {ok:true};
+ }
  if(req.action==='read'){
   if(!req.key||req.key!==p.getProperty('TEACHER_KEY'))throw Error('老師管理密碼不正確');
   const start=Math.max(2,Number(req.cursor)||2),last=sheet.getLastRow(),count=Math.min(30,Math.max(0,last-start+1));

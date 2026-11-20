@@ -38,6 +38,19 @@
  window.lockTeacher=()=>{teacherSecret='';generation++;collected=[];teacher();$('teacherDashboard').hidden=true;$('teacherLogin').hidden=false;$('teacherKey').value='';$('teacherStatus').textContent='已登出老師觀察室';};
  $('teacherLogout').onclick=()=>{window.lockTeacher();identityReady=false;showView('home')};
  $('cloudFetch').onclick=handle(async()=>{if(!teacherSecret)throw Error('請先輸入管理密碼登入');await poll()});
+ $('changeKeyForm').onsubmit=async e=>{
+  e.preventDefault();
+  if(!teacherSecret){notify('請先登入老師觀察室');return}
+  if(reading){notify('正在更新紀錄，請稍候再試');return}
+  const next=$('newTeacherKey').value.trim(),again=$('confirmTeacherKey').value.trim(),btn=$('changeKeyButton');
+  if(next.length<8||next.length>100){notify('新密碼需為 8 至 100 個字元');return}
+  if(next!==again){notify('兩次輸入的新密碼不一致');return}
+  if(next===teacherSecret){notify('新密碼不可與目前密碼相同');return}
+  reading=true;btn.disabled=true;
+  try{await request(classroom.endpoint,{action:'changeTeacherKey',key:teacherSecret,newKey:next});teacherSecret=next;$('newTeacherKey').value='';$('confirmTeacherKey').value='';$('teacherStatus').textContent='管理密碼已更新 ✓';notify('管理密碼已更新')}
+  catch(err){notify('修改失敗：'+err.message)}
+  finally{reading=false;btn.disabled=false}
+ };
  window.addEventListener('online',flush);document.addEventListener('visibilitychange',()=>{if(!document.hidden){flush();poll()}});
  window.addEventListener('beforeunload',e=>{if(Object.keys(outbox).length){e.preventDefault();e.returnValue=''}});
  setInterval(flush,3000);setInterval(poll,10000);
