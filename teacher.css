@@ -5,10 +5,13 @@
 .key-form label{display:grid;gap:6px}
 .key-form input{border:1px solid #7eaaa857;background:#071a24b3;border-radius:9px;padding:12px;font-size:15px;color:inherit}
 .student-card{border:1px solid #7eaaa857;border-radius:12px;padding:12px 16px;margin:10px 0;background:#071a24b3}
-.student-card>summary{cursor:pointer;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 14px;list-style:none}
+.student-card>summary{cursor:pointer;display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:6px 10px;list-style:none}
 .student-card>summary::-webkit-details-marker{display:none}
 .student-card>summary::before{content:"▸";display:inline-block;margin-right:8px;transition:transform .15s}
 .student-card[open]>summary::before{transform:rotate(90deg)}
 .student-name{font-weight:700;font-size:18px}
-.student-meta{color:#b9cfd0;font-size:13px}
+.student-meta{color:#b9cfd0;font-size:13px;flex-basis:100%;padding-left:22px}
 .student-attempts{margin-top:12px}
+
+/* Keep the teacher heading clear of the fixed scene navigation on phones */
+@media(max-width:700px){body[data-screen=teacher] main{padding-top:150px}}
