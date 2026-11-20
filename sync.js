@@ -1,6 +1,6 @@
 /* Google Apps Script transport. Only acknowledged writes leave the durable queue. */
 (()=>{
- const classroom={endpoint:'https://script.google.com/macros/s/AKfycbyhoRjHHdJc340fTca57a_uZfygt4x_OXRV4GFQ5LDY-ENfshdnDbLKVhXBzkNtQLUX/exec',key:'4237b125-c061-4fd4-8f02-4745c25aa2fe4a98a36c-16ec-408f-8aef-2797a4d3dbbd'};
+ const classroom={endpoint:'https://script.google.com/macros/s/AKfycbwUrPVURctz7bxeIAvpOKH2iGGn9hhQomnX5yeE4YvxIKG9UoJ6gDCBbvybP0nlzGOn/exec',key:'4237b125-c061-4fd4-8f02-4745c25aa2fe4a98a36c-16ec-408f-8aef-2797a4d3dbbd'};
  let outbox=read('fm-outbox',{}),owners=read('fm-owners',{}),revisions=read('fm-revisions',{}),busy=false,teacherSecret='',generation=0,reading=false;
  const validEndpoint=u=>/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(u||'');
  const configured=()=>validEndpoint(classroom.endpoint)&&typeof classroom.key==='string'&&classroom.key.length>=32;
