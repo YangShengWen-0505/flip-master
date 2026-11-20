@@ -12,9 +12,9 @@ Git credential 可推送；Google 初始化已完成授權。學生寫入碼與�
 ## 費用、續約與外部期限
 未開通付費服務。學生請用座號或暱稱；公開 repository 不放學生資料。
 ## 待確認事項
-已驗證：GitHub Pages 兩個獨立頁面，測試學生完成 3×3 五步翻紅，老師自動收到 1 筆成功紀錄，重播第 5 步九格全紅。尚未以兩台實體裝置測試。
+已驗證：GitHub Pages 兩個獨立頁面，學生完成 3×3 五步翻紅，老師自動收到 1 筆成功紀錄，重播第 5 步九格全紅。尚未以兩台實體裝置測試。
 ## 參考資料與更新
-README.md、GOOGLE_SETUP.md、google-apps-script/Code.gs。2026-11-13 完成 Apps Script v1 部署及線上收件實測。測試班紀錄保留以供檢查。
+README.md、GOOGLE_SETUP.md、google-apps-script/Code.gs。2026-11-13 完成 Apps Script v1 部署及線上收件實測。
 
 接收端：https://script.google.com/macros/s/AKfycbyhoRjHHdJc340fTca57a_uZfygt4x_OXRV4GFQ5LDY-ENfshdnDbLKVhXBzkNtQLUX/exec
 
