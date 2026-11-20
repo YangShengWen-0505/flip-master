@@ -1,7 +1,7 @@
 /* Google Apps Script transport. Only acknowledged writes leave the durable queue. */
 (()=>{
  const classroom={endpoint:'https://script.google.com/macros/s/AKfycbwUrPVURctz7bxeIAvpOKH2iGGn9hhQomnX5yeE4YvxIKG9UoJ6gDCBbvybP0nlzGOn/exec',key:'4237b125-c061-4fd4-8f02-4745c25aa2fe4a98a36c-16ec-408f-8aef-2797a4d3dbbd'};
- let outbox=read('fm-outbox',{}),owners=read('fm-owners',{}),revisions=read('fm-revisions',{}),busy=false,teacherSecret='',generation=0,reading=false;
+ let outbox=read('fm-outbox',{}),owners=read('fm-owners',{}),revisions=read('fm-revisions',{}),busy=false,teacherSecret='',generation=0,reading=false,changing=false;
  const validEndpoint=u=>/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(u||'');
  const configured=()=>validEndpoint(classroom.endpoint)&&typeof classroom.key==='string'&&classroom.key.length>=32;
  if(configured()){write('fm-classroom',classroom);history.replaceState(null,'',location.pathname+location.search)}
@@ -28,7 +28,7 @@
   catch(e){status('尚未送達・已保留並會自動重試：'+(e.name==='AbortError'?'連線逾時':e.message))}finally{busy=false}
  }
  async function poll(){
-  if(!teacherSecret||reading||$('teacher').hidden||document.hidden)return;reading=true;const gen=generation,secret=teacherSecret,endpoint=classroom.endpoint;
+  if(!teacherSecret||reading||changing||$('teacher').hidden||document.hidden)return;reading=true;const gen=generation,secret=teacherSecret,endpoint=classroom.endpoint;
   try{let cursor=2,result=[];do{const page=await request(endpoint,{action:'read',key:secret,cursor});if(gen!==generation)return;if(!Array.isArray(page.records)||!page.records.every(valid))throw Error('紀錄格式不正確');result.push(...page.records);cursor=page.next}while(cursor);
    if(gen!==generation)return;collected=result;teacher();$('teacherLogin').hidden=true;$('teacherDashboard').hidden=false;$('teacherUpdated').textContent=`已更新 ${result.length} 筆紀錄・${new Date().toLocaleTimeString('zh-TW')}・每 10 秒更新`;
   }catch(e){if(gen===generation){$('teacherStatus').textContent=$('teacherUpdated').textContent='登入或更新失敗：'+e.message;if($('teacherDashboard').hidden)teacherSecret=''}}finally{reading=false}
@@ -43,14 +43,14 @@
  $('changeKeyForm').onsubmit=async e=>{
   e.preventDefault();
   if(!teacherSecret){notify('請先登入老師系統');return}
-  if(reading){notify('正在更新紀錄，請稍候再試');return}
+  if(changing)return;
   const next=$('newTeacherKey').value.trim(),again=$('confirmTeacherKey').value.trim(),btn=$('changeKeyButton');
   if(!next){notify('新密碼不可空白');return}
   if(next!==again){notify('兩次輸入的新密碼不一致');return}
-  reading=true;btn.disabled=true;
+  changing=true;btn.disabled=true;
   try{await request(classroom.endpoint,{action:'changeTeacherKey',key:teacherSecret,newKey:next});teacherSecret=next;$('newTeacherKey').value='';$('confirmTeacherKey').value='';$('changeKeyDialog').close();$('teacherUpdated').textContent='管理密碼已更新 ✓';notify('管理密碼已更新')}
   catch(err){notify('修改失敗：'+err.message)}
-  finally{reading=false;btn.disabled=false}
+  finally{changing=false;btn.disabled=false}
  };
  window.addEventListener('online',flush);document.addEventListener('visibilitychange',()=>{if(!document.hidden){flush();poll()}});
  window.addEventListener('beforeunload',e=>{if(Object.keys(outbox).length){e.preventDefault();e.returnValue=''}});
