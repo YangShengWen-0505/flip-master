@@ -30,25 +30,25 @@
  async function poll(){
   if(!teacherSecret||reading||$('teacher').hidden||document.hidden)return;reading=true;const gen=generation,secret=teacherSecret,endpoint=classroom.endpoint;
   try{let cursor=2,result=[];do{const page=await request(endpoint,{action:'read',key:secret,cursor});if(gen!==generation)return;if(!Array.isArray(page.records)||!page.records.every(valid))throw Error('紀錄格式不正確');result.push(...page.records);cursor=page.next}while(cursor);
-   if(gen!==generation)return;collected=result;teacher();$('teacherLogin').hidden=true;$('teacherDashboard').hidden=false;$('teacherStatus').textContent=`已更新 ${result.length} 筆紀錄・${new Date().toLocaleTimeString('zh-TW')}・每 10 秒更新`;
-  }catch(e){if(gen===generation){$('teacherStatus').textContent='登入或更新失敗：'+e.message;if($('teacherDashboard').hidden)teacherSecret=''}}finally{reading=false}
+   if(gen!==generation)return;collected=result;teacher();$('teacherLogin').hidden=true;$('teacherDashboard').hidden=false;$('teacherUpdated').textContent=`已更新 ${result.length} 筆紀錄・${new Date().toLocaleTimeString('zh-TW')}・每 10 秒更新`;
+  }catch(e){if(gen===generation){$('teacherStatus').textContent=$('teacherUpdated').textContent='登入或更新失敗：'+e.message;if($('teacherDashboard').hidden)teacherSecret=''}}finally{reading=false}
  }
  const handle=fn=>async()=>{try{await fn()}catch(e){notify(e.message)}};
  $('teacherForm').onsubmit=async e=>{e.preventDefault();if(reading)return;const secret=$('teacherKey').value.trim();if(!secret)return;$('teacherConnect').disabled=true;$('teacherStatus').textContent='正在驗證管理密碼…';teacherSecret=secret;generation++;collected=[];teacher();await poll();$('teacherConnect').disabled=false;if(teacherSecret)$('teacherKey').value=''};
- window.lockTeacher=()=>{teacherSecret='';generation++;collected=[];teacher();$('teacherDashboard').hidden=true;$('teacherLogin').hidden=false;$('teacherKey').value='';$('teacherStatus').textContent='已登出老師觀察室';};
- $('teacherLogout').onclick=()=>{window.lockTeacher();identityReady=false;showView('home')};
+ window.lockTeacher=()=>{teacherSecret='';generation++;collected=[];teacher();$('teacherDashboard').hidden=true;$('teacherLogin').hidden=false;$('teacherKey').value='';$('teacherStatus').textContent='';$('teacherUpdated').textContent='';};
+ $('teacherLogout').onclick=()=>{window.lockTeacher();$('teacherStatus').textContent='已登出老師系統';identityReady=false;showView('home')};
  $('cloudFetch').onclick=handle(async()=>{if(!teacherSecret)throw Error('請先輸入管理密碼登入');await poll()});
  $('changeKeyOpen').onclick=()=>$('changeKeyDialog').showModal();
  $('changeKeyCancel').onclick=()=>$('changeKeyDialog').close();
  $('changeKeyForm').onsubmit=async e=>{
   e.preventDefault();
-  if(!teacherSecret){notify('請先登入老師觀察室');return}
+  if(!teacherSecret){notify('請先登入老師系統');return}
   if(reading){notify('正在更新紀錄，請稍候再試');return}
   const next=$('newTeacherKey').value.trim(),again=$('confirmTeacherKey').value.trim(),btn=$('changeKeyButton');
   if(!next){notify('新密碼不可空白');return}
   if(next!==again){notify('兩次輸入的新密碼不一致');return}
   reading=true;btn.disabled=true;
-  try{await request(classroom.endpoint,{action:'changeTeacherKey',key:teacherSecret,newKey:next});teacherSecret=next;$('newTeacherKey').value='';$('confirmTeacherKey').value='';$('changeKeyDialog').close();$('teacherStatus').textContent='管理密碼已更新 ✓';notify('管理密碼已更新')}
+  try{await request(classroom.endpoint,{action:'changeTeacherKey',key:teacherSecret,newKey:next});teacherSecret=next;$('newTeacherKey').value='';$('confirmTeacherKey').value='';$('changeKeyDialog').close();$('teacherUpdated').textContent='管理密碼已更新 ✓';notify('管理密碼已更新')}
   catch(err){notify('修改失敗：'+err.message)}
   finally{reading=false;btn.disabled=false}
  };
