@@ -1,7 +1,7 @@
 /* Original character dialogue for learning; no timers interrupt the board. */
 (()=>{
  const el=id=>document.getElementById(id);
- const names={xiaoshi:'程小石',luguang:'陸廣',qiaoling:'喬玲'};
+ const names={xiaoshi:'程小石',luguang:'陸洸',qiaoling:'喬玲'};
  let typingTimer=null,typingText='',typing=false;
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
  function completeText(){clearTimeout(typingTimer);typing=false;el('characterLine').textContent=typingText;el('skipTyping').hidden=true;el('characterLine').classList.remove('typing');el('chatNext').hidden=false;el('skipTyping').hidden=true}
