@@ -2,7 +2,7 @@ const $=id=>document.getElementById(id),read=(k,d)=>{try{return JSON.parse(local
 let records=read('fm-records',[]),collected=read('fm-collected',[]),game=read('fm-active',null),replaying=null;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),notify=s=>$('notice').textContent=s;
 let identityReady=false;
-const profile=read('fm-profile',{});['student'].forEach(k=>{$(k).value=profile[k]||'';$(k).onchange=()=>write('fm-profile',{student:$('student').value.trim(),className:$('className').value.trim()})});
+const profile=read('fm-profile',{});['student'].forEach(k=>{$(k).value=profile[k]&&profile[k]!=='-1'?profile[k]:'';$(k).onchange=()=>{if($('student').value.trim()!=='-1')write('fm-profile',{student:$('student').value.trim(),className:$('className').value.trim()})}});
 
 function persist(){if(game){const i=records.findIndex(x=>x.id===game.id);if(i<0)records.push(game);else records[i]=game;write('fm-records',records);write('fm-active',game); window.queueRecord?.(game)}}
 function elapsed(g){return Math.max(0,Math.floor(((g.ended?Date.parse(g.ended):Date.now())-Date.parse(g.started))/1000))}
