@@ -14,4 +14,5 @@
 .student-attempts{margin-top:12px}
 
 /* Keep the teacher heading clear of the fixed scene navigation on phones */
+body[data-screen=teacher] main{padding-top:120px}
 @media(max-width:700px){body[data-screen=teacher] main{padding-top:150px}}
