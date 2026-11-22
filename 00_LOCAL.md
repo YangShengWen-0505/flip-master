@@ -16,7 +16,7 @@ Git credential 可推送；Google 初始化已完成授權。學生寫入碼與�
 ## 參考資料與更新
 README.md、GOOGLE_SETUP.md、google-apps-script/Code.gs。2026-11-13 完成 Apps Script v1 部署及線上收件實測。
 
-接收端：https://script.google.com/macros/s/AKfycbyhoRjHHdJc340fTca57a_uZfygt4x_OXRV4GFQ5LDY-ENfshdnDbLKVhXBzkNtQLUX/exec
+接收端：https://script.google.com/macros/s/AKfycbwUrPVURctz7bxeIAvpOKH2iGGn9hhQomnX5yeE4YvxIKG9UoJ6gDCBbvybP0nlzGOn/exec（2026-11-23 第 5 版部署，與 sync.js 相同）
 
 2026-11-13 更新：主選單與全遊戲角色主題、免設定學生直連、老師單一密碼登入。assets/time-studio.png 隨 GitHub Pages workflow 部署。
 
