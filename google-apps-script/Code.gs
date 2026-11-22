@@ -53,7 +53,7 @@ function handle_(req){
  }finally{lock.releaseLock()}
 }
 function validate_(g){
- if(!g||!/^[a-f0-9-]{36}$/i.test(g.id)||!['3x3','4x4','5x5','3x4','3x6'].includes(g.rows+'x'+g.cols)||typeof g.student!=='string'||g.student.length>30||typeof g.className!=='string'||g.className.length>30||!Array.isArray(g.moves)||g.moves.length>1500||!Array.isArray(g.hints)||g.hints.length>1500||!Number.isFinite(Date.parse(g.started))||!['playing','saved','won'].includes(g.status))throw Error('紀錄格式不正確');
+ if(!g||!/^[a-f0-9-]{36}$/i.test(g.id)||!['2x2','2x3','2x4','2x5','2x6','3x3','3x4','3x5','3x6','4x4','4x5','4x6','5x5','5x6','6x6'].includes(g.rows+'x'+g.cols)||typeof g.student!=='string'||g.student.length>30||typeof g.className!=='string'||g.className.length>30||!Array.isArray(g.moves)||g.moves.length>1500||!Array.isArray(g.hints)||g.hints.length>1500||!Number.isFinite(Date.parse(g.started))||!['playing','saved','won'].includes(g.status))throw Error('紀錄格式不正確');
  const n=g.rows*g.cols,board=b=>Array.isArray(b)&&b.length===n&&b.every(x=>x===0||x===1),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
  if(!board(g.initial)||!board(g.board))throw Error('棋盤格式不正確');let b=g.initial.slice();
  for(const m of g.moves){if(!Number.isInteger(m.index)||m.index<0||m.index>=n||!same(b,m.before)||!Number.isFinite(m.elapsed)||m.elapsed<0||!Number.isFinite(Date.parse(m.at)))throw Error('翻動紀錄不正確');const y=Math.floor(m.index/g.cols),x=m.index%g.cols;if(m.row!==y+1||m.col!==x+1)throw Error('座標不正確');[[y,x],[y-1,x],[y+1,x],[y,x-1],[y,x+1]].filter(([a,c])=>a>=0&&a<g.rows&&c>=0&&c<g.cols).forEach(([a,c])=>b[a*g.cols+c]^=1);if(!same(b,m.after))throw Error('盤面不一致')}
